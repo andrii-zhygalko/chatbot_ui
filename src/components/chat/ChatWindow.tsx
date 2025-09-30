@@ -1,19 +1,22 @@
 import { useState } from 'react'
 import { Card } from '@/components/ui/card'
-import { ConversationItem } from '@/lib/types'
-import { generateId, getCurrentTimestamp } from '@/lib/utils'
+import { TConversationItem } from '@/lib/types'
+import { ConversationItem } from './ConversationItem'
+import {
+  createErrorMessage,
+  generateId,
+  getCurrentTimestamp,
+} from '@/lib/utils'
 import { sendMessage } from '@/lib/mockApi'
-import { MessageBubble } from './MessageBubble'
-import { BotMessageBubble } from './BotMessageBubble'
 import { InputBar } from './InputBar'
 
 export function ChatWindow() {
-  const [conversation, setConversation] = useState<ConversationItem[]>([])
+  const [conversation, setConversation] = useState<TConversationItem[]>([])
 
   const addMessage = async (content: string) => {
     const timestamp = getCurrentTimestamp()
 
-    const userMessage: ConversationItem = {
+    const userMessage: TConversationItem = {
       id: generateId(),
       timestamp,
       type: 'user',
@@ -21,7 +24,7 @@ export function ChatWindow() {
     }
 
     const loadingId = generateId()
-    const loadingMessage: ConversationItem = {
+    const loadingMessage: TConversationItem = {
       id: loadingId,
       timestamp,
       type: 'loading',
@@ -30,40 +33,30 @@ export function ChatWindow() {
 
     setConversation((prev) => [...prev, userMessage, loadingMessage])
 
+    let botResponse: TConversationItem
+
     try {
       const response = await sendMessage(content)
 
-      setConversation((prev) =>
-        prev.map((item) =>
-          item.id === loadingId
-            ? {
-                id: generateId(),
-                timestamp,
-                type: 'bot',
-                botText:
-                  response.success && response.data
-                    ? response.data.text
-                    : 'Si è verificato un errore. Si prega di riprovare.',
-              }
-            : item
+      if (response.success && response.data) {
+        botResponse = response.data
+      } else {
+        botResponse = createErrorMessage(
+          timestamp,
+          'Si è verificato un errore. Si prega di riprovare.'
         )
-      )
+      }
     } catch (error) {
       console.error('Errore di rete:', error)
-
-      setConversation((prev) =>
-        prev.map((item) =>
-          item.id === loadingId
-            ? {
-                id: generateId(),
-                timestamp,
-                type: 'bot',
-                botText: 'Errore di rete. Si prega di riprovare.',
-              }
-            : item
-        )
+      botResponse = createErrorMessage(
+        timestamp,
+        'Errore di rete. Si prega di riprovare.'
       )
     }
+
+    setConversation((prev) =>
+      prev.map((item) => (item.id === loadingId ? botResponse : item))
+    )
   }
 
   return (
@@ -75,55 +68,15 @@ export function ChatWindow() {
           </div>
         ) : (
           <div className="space-y-4">
-            {[...conversation]
-              .sort(
+            {conversation
+              .toSorted(
                 (a, b) =>
                   new Date(a.timestamp).getTime() -
                   new Date(b.timestamp).getTime()
               )
-              .map((item) => {
-                if (item.type === 'user') {
-                  return (
-                    <MessageBubble
-                      key={item.id}
-                      message={{
-                        id: item.id,
-                        content: item.content,
-                        sender: 'user',
-                        timestamp: item.timestamp,
-                      }}
-                    />
-                  )
-                }
-
-                if (item.type === 'bot') {
-                  return (
-                    <BotMessageBubble
-                      key={item.id}
-                      response={{
-                        id: item.id,
-                        text: item.botText,
-                        timestamp: item.timestamp,
-                      }}
-                    />
-                  )
-                }
-
-                if (item.type === 'loading') {
-                  return (
-                    <div
-                      key={item.id}
-                      className="bg-muted text-foreground p-3 rounded-lg max-w-[80%] mr-auto"
-                    >
-                      <div className="text-sm text-muted-foreground">
-                        {item.loadingText}
-                      </div>
-                    </div>
-                  )
-                }
-
-                return null
-              })}
+              .map((item) => (
+                <ConversationItem key={item.id} item={item} />
+              ))}
           </div>
         )}
       </div>

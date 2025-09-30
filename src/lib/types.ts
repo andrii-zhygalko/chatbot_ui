@@ -1,23 +1,10 @@
-export interface Message {
-  id: string
-  content: string
-  sender: 'user' | 'bot'
-  timestamp: string
+export interface ITableData {
+  title: string
+  columns: Array<{ id: string; label: string }>
+  rows: Array<Record<string, string | number>>
 }
 
-export interface BotTextResponse {
-  id: string
-  text: string
-  timestamp: string
-}
-
-export interface ApiResponse {
-  success: boolean
-  data?: BotTextResponse
-  error?: string
-}
-
-export type ConversationItem =
+export type TConversationItem =
   | {
       type: 'user'
       id: string
@@ -35,4 +22,10 @@ export type ConversationItem =
       id: string
       timestamp: string
       loadingText: string
+    }
+  | {
+      type: 'bot-table'
+      id: string
+      timestamp: string
+      table: ITableData
     }

@@ -3,12 +3,12 @@ import { Input } from '@/components/ui/input'
 import { Button } from '@/components/ui/button'
 import { Send } from 'lucide-react'
 
-interface InputBarProps {
+interface IInputBarProps {
   onSendMessage: (message: string) => void
   maxLength?: number
 }
 
-export function InputBar({ onSendMessage, maxLength = 100 }: InputBarProps) {
+export function InputBar({ onSendMessage, maxLength = 100 }: IInputBarProps) {
   const [input, setInput] = useState('')
   const remainingChars = maxLength - input.length
   const isNearLimit = remainingChars <= 50

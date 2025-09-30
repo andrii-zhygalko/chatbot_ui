@@ -1,5 +1,6 @@
 import { clsx, type ClassValue } from 'clsx'
 import { twMerge } from 'tailwind-merge'
+import { TConversationItem } from './types'
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs))
@@ -13,19 +14,14 @@ export function getCurrentTimestamp(): string {
   return new Date().toISOString()
 }
 
-const TRIGGER_PHRASES = {
-  'mostrami le vendite mensili': 'sales',
-  'elenca gli ultimi utenti': 'users',
-} as const
-
-type TriggerPhrase = keyof typeof TRIGGER_PHRASES
-type TriggerType = (typeof TRIGGER_PHRASES)[TriggerPhrase]
-
-export function getTriggerType(message: string): TriggerType | 'text' {
-  const normalizedMessage = message.toLowerCase().trim()
-
-  if (normalizedMessage in TRIGGER_PHRASES) {
-    return TRIGGER_PHRASES[normalizedMessage as TriggerPhrase]
+export function createErrorMessage(
+  timestamp: string,
+  errorText: string
+): Extract<TConversationItem, { type: 'bot' }> {
+  return {
+    type: 'bot',
+    id: generateId(),
+    timestamp,
+    botText: errorText,
   }
-  return 'text'
 }

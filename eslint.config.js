@@ -3,13 +3,14 @@ import globals from 'globals'
 import reactHooks from 'eslint-plugin-react-hooks'
 import reactRefresh from 'eslint-plugin-react-refresh'
 import tseslint from 'typescript-eslint'
+import { defineConfig } from 'eslint/config'
 
-export default tseslint.config({
+export default defineConfig({
   extends: [js.configs.recommended, ...tseslint.configs.recommended],
   files: ['**/*.{ts,tsx}'],
   ignores: ['dist'],
   languageOptions: {
-    ecmaVersion: 2020,
+    ecmaVersion: 2023,
     globals: globals.browser,
   },
   plugins: {

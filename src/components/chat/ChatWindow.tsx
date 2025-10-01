@@ -37,7 +37,15 @@ export function ChatWindow() {
         </Button>
       </div>
 
-      <div className="flex-1 p-4 overflow-y-auto">
+      <div
+        className="flex-1 p-4 overflow-y-auto
+                      [&::-webkit-scrollbar]:w-1.5
+                      [&::-webkit-scrollbar-track]:bg-muted/20
+                      [&::-webkit-scrollbar-thumb]:bg-muted-foreground/30
+                      [&::-webkit-scrollbar-thumb]:rounded-full
+                      [&::-webkit-scrollbar-thumb]:hover:bg-muted-foreground/50
+                      scrollbar-thin"
+      >
         {conversation.length === 0 ? (
           <div className="text-center text-muted-foreground mt-8">
             Inizia una conversazione...

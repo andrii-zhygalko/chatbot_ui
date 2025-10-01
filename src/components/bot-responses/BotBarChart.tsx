@@ -35,7 +35,7 @@ export function BotBarChart({ chart, timestamp }: IBotBarChartProps) {
 
   return (
     <article
-      className="bg-muted text-foreground p-3 rounded-lg max-w-[90%] mr-auto"
+      className="bg-muted text-foreground p-3 rounded-lg max-w-[100%] sm:max-w-[85%] mr-auto"
       aria-label={`Grafico: ${chart.title}`}
     >
       <h3 className="text-sm font-semibold mb-3">{chart.title}</h3>
@@ -71,11 +71,11 @@ export function BotBarChart({ chart, timestamp }: IBotBarChartProps) {
               {isMobile && (
                 <LabelList
                   dataKey="label"
-                  position="insideBottom"
+                  position="insideBottomLeft"
                   angle={-90}
                   fill="var(--background)"
                   fontSize={12}
-                  offset={15}
+                  offset={13}
                   formatter={(month) =>
                     typeof month === 'number' ? formatMonthShort(month) : month
                   }

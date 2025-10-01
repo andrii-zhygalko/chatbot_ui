@@ -13,6 +13,7 @@
   --color-muted: var(--muted);
   --color-muted-foreground: var(--muted-foreground);
   --color-border: var(--border);
+  --color-table: var(--table);
   --color-input: var(--input);
   --color-chart-1: var(--chart-1);
 }
@@ -29,6 +30,7 @@
   --muted: oklch(0.94 0 0);
   --muted-foreground: oklch(0.556 0 0);
   --border: oklch(0.922 0 0);
+  --table: oklch(0.4605 0 0);
   --input: oklch(0.8021 0 0);
   --chart-1: oklch(0.646 0.222 41.116);
 }
@@ -37,8 +39,13 @@
   * {
     @apply border-border;
   }
+  html, body, #root {
+    height: 100%;
+    overflow: hidden;
+  }
   body {
     @apply bg-background text-foreground;
     font-family: 'Montserrat', sans-serif;
   }
 }
+

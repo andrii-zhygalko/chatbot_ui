@@ -54,7 +54,14 @@ export function InputBar({ onSendMessage, maxLength = 500 }: IInputBarProps) {
 
   return (
     <div className="border-t">
-      <form className="p-4" onSubmit={handleFormSubmit}>
+      <form className="p-3 sm:p-4" onSubmit={handleFormSubmit}>
+        {isNearLimit && (
+          <div
+            className={`text-xs mb-1 ${isAtLimit ? 'text-red-700' : 'text-muted-foreground'}`}
+          >
+            {remainingChars} caratteri rimanenti
+          </div>
+        )}
         <div className="relative">
           <Textarea
             ref={textareaRef}
@@ -62,7 +69,8 @@ export function InputBar({ onSendMessage, maxLength = 500 }: IInputBarProps) {
             onChange={handleInputChange}
             onKeyDown={handleKeyDown}
             placeholder="Scrivi un messaggio..."
-            className="w-full resize-none overflow-y-auto min-h-[40px] pr-12 block
+            className="w-full resize-none overflow-y-auto min-h-[52px] sm:min-h-[40px] pr-12 block text-base
+                       py-3 sm:py-2
                        [&::-webkit-scrollbar]:w-1.5
                        [&::-webkit-scrollbar-track]:bg-muted/20
                        [&::-webkit-scrollbar-thumb]:bg-muted-foreground/30
@@ -75,18 +83,11 @@ export function InputBar({ onSendMessage, maxLength = 500 }: IInputBarProps) {
             type="submit"
             disabled={!input.trim() || isAtLimit}
             size="icon"
-            className="absolute bottom-1 right-2.5 h-8 w-8 rounded-full"
+            className="absolute bottom-1 right-2.5 h-8 w-8 sm:h-8 sm:w-8 min-h-[44px] min-w-[44px] sm:min-h-0 sm:min-w-0 rounded-full"
           >
-            <ArrowUp className="h-4 w-4" />
+            <ArrowUp className="h-5 w-5 sm:h-4 sm:w-4" />
             <span className="sr-only">Invia</span>
           </Button>
-          {isNearLimit && (
-            <div
-              className={`text-xs mt-1 absolute bottom-[-18px] left-[2px]  ${isAtLimit ? 'text-red-700' : 'text-muted-foreground'}`}
-            >
-              {remainingChars} caratteri rimanenti
-            </div>
-          )}
         </div>
       </form>
     </div>

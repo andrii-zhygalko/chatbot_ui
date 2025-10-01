@@ -20,23 +20,25 @@ export function ChatWindow() {
   }, [conversation])
 
   return (
-    <div className="flex flex-col h-screen">
-      <div className="flex items-center justify-between px-4 py-4 border-b bg-card shadow-sm">
-        <h2 className="text-base font-semibold">Chat con l’assistente</h2>
+    <div className="flex flex-col h-dvh md:max-w-4xl md:mx-auto md:border-x md:shadow-xl bg-background">
+      <div className="flex items-center justify-between px-3 sm:px-4 py-2 sm:py-4 border-b bg-gradient-to-t from-white via-gray-100 to-gray-200">
+        <h2 className="text-sm sm:text-base font-semibold">
+          Chat con l'assistente
+        </h2>
         <Button
           variant="ghost"
           size="sm"
           onClick={clearConversation}
           disabled={conversation.length === 0}
           title="Cancella conversazione"
-          className="text-xs"
+          className="text-xs px-2 sm:px-3"
         >
-          <Trash2 />
+          <Trash2 className="h-3 w-3 sm:h-4 sm:w-4" />
         </Button>
       </div>
 
       <div
-        className="flex-1 p-4 overflow-y-auto
+        className="flex-1 p-3 sm:p-4 overflow-y-auto
                       [&::-webkit-scrollbar]:w-1.5
                       [&::-webkit-scrollbar-track]:bg-muted/20
                       [&::-webkit-scrollbar-thumb]:bg-muted-foreground/30
@@ -45,11 +47,11 @@ export function ChatWindow() {
                       scrollbar-thin"
       >
         {conversation.length === 0 ? (
-          <div className="text-center text-muted-foreground mt-8">
+          <div className="text-center text-muted-foreground mt-6 sm:mt-8 text-sm">
             Inizia una conversazione...
           </div>
         ) : (
-          <div className="space-y-4">
+          <div className="space-y-3 sm:space-y-4">
             {conversation
               .toSorted(
                 (a, b) =>

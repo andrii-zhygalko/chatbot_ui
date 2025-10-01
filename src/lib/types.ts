@@ -4,6 +4,13 @@ export interface ITableData {
   rows: Array<Record<string, string | number>>
 }
 
+export interface IChartData {
+  title: string
+  data: Array<{ label: string | number; value: number }>
+  xKey: string
+  yKey: string
+}
+
 export type TConversationItem =
   | {
       type: 'user'
@@ -28,4 +35,10 @@ export type TConversationItem =
       id: string
       timestamp: string
       table: ITableData
+    }
+  | {
+      type: 'bot-chart'
+      id: string
+      timestamp: string
+      chart: IChartData
     }

@@ -1,13 +1,13 @@
-import type { TConversationItem, ITableData } from './types'
+import type { TConversationItem, ITableData, IChartData } from './types'
 import { generateId, getCurrentTimestamp } from './utils'
 
 const textResponses = [
-  'Ciao! Al momento posso mostrarti solo le vendite mensili o gli ultimi utenti. Scrivi "mostrami le vendite mensili" oppure "elenca gli ultimi utenti". ',
-  'Funzionalità aggiuntive sono in sviluppo. Prova a scrivere "mostrami le vendite mensili" o "elenca gli ultimi utenti".',
+  'Ciao! Al momento posso mostrarti solo le vendite mensili o gli ultimi utenti. Scrivi "mostrami le vendite mensili" oppure "elenca gli ultimi utenti".',
+  'Funzionalità aggiuntive sono in arrivo. Prova a scrivere "mostrami le vendite mensili" o "elenca gli ultimi utenti".',
   'Perfetto! Ora prova uno dei comandi supportati: "mostrami le vendite mensili" oppure "elenca gli ultimi utenti".',
-  'Al momento posso rispondere a queste richieste: mostrare le vendite mensili o elencare gli ultimi utenti. Scrivi "mostrami le vendite mensili" o "elenca gli ultimi utenti".',
+  'Al momento posso rispondere a queste richieste: "mostrami le vendite mensili" o "elenca gli ultimi utenti".',
   'Sto ancora imparando! Prova uno di questi comandi: "mostrami le vendite mensili" o "elenca gli ultimi utenti".',
-  'Questa parte è ancora in costruzione. Intanto puoi chiedermi le vendite mensili o l’elenco degli ultimi utenti. Prova a scrivere "mostrami le vendite mensili" o "elenca gli ultimi utenti".',
+  'Questa parte è ancora in costruzione. Intanto puoi scrivermi "mostrami le vendite mensili" o "elenca gli ultimi utenti".',
   'Ottimo! Ora scegli cosa vuoi vedere: scrivi "mostrami le vendite mensili" oppure "elenca gli ultimi utenti".',
 ]
 
@@ -53,6 +53,26 @@ const usersTableData: ITableData = {
   ],
 }
 
+const salesChartData: IChartData = {
+  title: 'Vendite mensili (EUR)',
+  data: [
+    { label: 1, value: 12500 },
+    { label: 2, value: 15200 },
+    { label: 3, value: 18700 },
+    { label: 4, value: 14300 },
+    { label: 5, value: 16800 },
+    { label: 6, value: 19200 },
+    { label: 7, value: 22100 },
+    { label: 8, value: 17500 },
+    { label: 9, value: 20300 },
+    { label: 10, value: 23800 },
+    { label: 11, value: 21900 },
+    { label: 12, value: 25600 },
+  ],
+  xKey: 'label',
+  yKey: 'value',
+}
+
 const TRIGGER_PHRASES = {
   'mostrami le vendite mensili': 'sales',
   'elenca gli ultimi utenti': 'users',
@@ -85,10 +105,10 @@ function createBotResponse(userMessage: string): TConversationItem {
 
   if (triggerType === 'sales') {
     return {
-      type: 'bot',
+      type: 'bot-chart',
       id: generateId(),
       timestamp,
-      botText: 'Funzionalità grafici in fase di sviluppo.',
+      chart: salesChartData,
     }
   }
 

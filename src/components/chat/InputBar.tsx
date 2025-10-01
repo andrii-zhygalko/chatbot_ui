@@ -32,7 +32,7 @@ export function InputBar({ onSendMessage, maxLength = 100 }: IInputBarProps) {
 
   return (
     <div className="border-t">
-      <form className="p-4 flex gap-2" onSubmit={handleSend}>
+      <form className="px-4 pt-4 flex gap-2" onSubmit={handleSend}>
         <div className="flex-1 relative">
           <Input
             value={input}
@@ -48,8 +48,8 @@ export function InputBar({ onSendMessage, maxLength = 100 }: IInputBarProps) {
             </div>
           )}
         </div>
-        <Button type="submit" size="sm" disabled={!input.trim() || isAtLimit}>
-          <Send className="h-4 w-4" />
+        <Button type="submit" disabled={!input.trim() || isAtLimit}>
+          <Send />
           <span className="sr-only">Invia</span>
         </Button>
       </form>

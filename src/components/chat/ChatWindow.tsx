@@ -1,5 +1,4 @@
 import { useEffect, useRef } from 'react'
-import { Card } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
 import { Trash2 } from 'lucide-react'
 import { ConversationItem } from './ConversationItem'
@@ -21,9 +20,9 @@ export function ChatWindow() {
   }, [conversation])
 
   return (
-    <Card className="w-full max-w-2xl mx-auto h-[600px] flex flex-col">
-      <div className="flex items-center justify-between px-4 pb-4 border-b">
-        <h2 className="text-base font-semibold">Chat</h2>
+    <div className="flex flex-col h-screen">
+      <div className="flex items-center justify-between px-4 py-4 border-b bg-card shadow-sm">
+        <h2 className="text-base font-semibold">Chat con l’assistente</h2>
         <Button
           variant="ghost"
           size="sm"
@@ -33,7 +32,6 @@ export function ChatWindow() {
           className="text-xs"
         >
           <Trash2 />
-          Ripulisci
         </Button>
       </div>
 
@@ -67,6 +65,6 @@ export function ChatWindow() {
       </div>
 
       <InputBar onSendMessage={sendMessage} maxLength={500} />
-    </Card>
+    </div>
   )
 }

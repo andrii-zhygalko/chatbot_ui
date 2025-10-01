@@ -54,7 +54,7 @@ export function InputBar({ onSendMessage, maxLength = 500 }: IInputBarProps) {
 
   return (
     <div className="border-t">
-      <form className="px-4 pt-4" onSubmit={handleFormSubmit}>
+      <form className="p-4" onSubmit={handleFormSubmit}>
         <div className="relative">
           <Textarea
             ref={textareaRef}

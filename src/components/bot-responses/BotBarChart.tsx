@@ -45,7 +45,7 @@ export function BotBarChart({ chart, timestamp }: IBotBarChartProps) {
             data={chart.data}
             margin={
               isMobile
-                ? { top: 20, right: 5, left: -20, bottom: 0 }
+                ? { top: 20, right: 5, left: -10, bottom: 0 }
                 : { top: 5, right: 20, left: 10, bottom: 20 }
             }
           >
